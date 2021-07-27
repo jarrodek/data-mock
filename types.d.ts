@@ -320,3 +320,17 @@ export interface HttpRequest {
    */
   payload?: string;
 }
+
+export interface HarTiming {
+  blocked: number;
+  connect: number;
+  receive: number;
+  send: number;
+  wait: number;
+  dns: number;
+  ssl?: number;
+}
+
+export interface HarTimingInit {
+  ssl?: boolean;
+}
