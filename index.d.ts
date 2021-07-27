@@ -7,6 +7,6 @@ export { Random } from './src/lib/Random';
 export { Time } from './src/lib/Time';
 export { Types } from './src/lib/Types';
 export { Word } from './src/lib/Word';
-export { slug } from './src/lib/Utils';
+export * as Utils from './src/lib/Utils';
 export { DataMockLocale } from './locales/types';
 export * from './types';

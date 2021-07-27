@@ -7,4 +7,4 @@ export { Random } from './src/lib/Random.js';
 export { Time } from './src/lib/Time.js';
 export { Types } from './src/lib/Types.js';
 export { Word } from './src/lib/Word.js';
-export { slug } from './src/lib/Utils.js';
+export * as Utils from './src/lib/Utils.js';
