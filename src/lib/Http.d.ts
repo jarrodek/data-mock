@@ -1,5 +1,7 @@
 import { DataMockLocale } from "../../locales/types.js";
 import { DataMockInit, HttpOperationInit, HttpRequest, HttpRequestInit } from "../../types.js";
+import { HttpHeaders } from "./http/HttpHeaders.js";
+import { HttpPayload } from "./http/HttpPayload.js";
 import { Internet } from "./Internet.js";
 import { Random } from "./Random.js";
 
@@ -13,6 +15,9 @@ export declare class Http {
 
   [randomValue]: Random;
   [internetValue]: Internet;
+
+  headers: HttpHeaders;
+  payload: HttpPayload;
 
   /**
    * @param init The library init options.
