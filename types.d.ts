@@ -334,3 +334,15 @@ export interface HarTiming {
 export interface HarTimingInit {
   ssl?: boolean;
 }
+
+export interface HttpResponseInit {
+  noBody?: boolean;
+  statusGroup?: number;
+}
+
+export interface HttpResponseData {
+  status: number;
+  statusText: string;
+  headers: string;
+  payload?: any;
+}

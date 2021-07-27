@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { assert } from '@esm-bundle/chai';
 import { Person } from '../../index.js';
 import en from '../../locales/en/index.js';

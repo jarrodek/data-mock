@@ -1,4 +1,3 @@
-
 // eslint-disable-next-line import/no-unresolved
 import { assert } from '@esm-bundle/chai';
 import sinon from 'sinon';
@@ -407,6 +406,43 @@ describe('Http.payload', () => {
     it('returns random string for other types type', () => {
       const result = http.payload.payload('unknown');
       assert.isAbove(result.length, 1);
+    });
+  });
+});
+
+describe('Http.response', () => {
+  describe('response()', () => {
+    /** @type Http */
+    let http;
+  
+    beforeEach(() => {
+      http = new Http();
+    });
+
+    [
+      ['status', 'number'],
+      ['statusText', 'string'],
+      ['headers', 'string'],
+      ['payload', 'string'],
+    ].forEach(([prop, type]) => {
+      it(`has the ${prop} property by default`, () => {
+        const result = http.response.response();
+        assert.typeOf(result[prop], type);
+      });
+    });
+
+    it('ignores the payload when in options', () => {
+      const result = http.response.response({ noBody: true });
+      assert.isUndefined(result.payload);
+    });
+
+    it('has the specific response group', () => {
+      let result = http.response.response({ statusGroup: 2 });
+      assert.isAbove(result.status, 199);
+      assert.isBelow(result.status, 300);
+      result = http.response.response({ statusGroup: 3 });
+      assert.isAbove(result.status, 299);
+      assert.isBelow(result.status, 400);
     });
   });
 });

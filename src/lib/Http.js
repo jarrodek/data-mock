@@ -1,5 +1,6 @@
 import { HttpHeaders } from "./http/HttpHeaders.js";
 import { HttpPayload } from "./http/HttpPayload.js";
+import { HttpResponse } from "./http/HttpResponse.js";
 import { Internet } from "./Internet.js";
 import { Random } from "./Random.js";
 
@@ -36,6 +37,7 @@ export class Http {
 
     this.headers = new HttpHeaders(init);
     this.payload = new HttpPayload(init);
+    this.response = new HttpResponse(init);
   }
 
   /**
@@ -46,6 +48,7 @@ export class Http {
     this[randomValue].seed(value);
     this.headers.seed(value);
     this.payload.seed(value);
+    this.response.seed(value);
   }
 
   /**
@@ -54,6 +57,7 @@ export class Http {
   locale(locale) {
     this.headers.locale(locale);
     this.payload.locale(locale);
+    this.response.locale(locale);
     this[internetValue].locale(locale);
   }
 
