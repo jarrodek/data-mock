@@ -445,4 +445,34 @@ describe('Http.response', () => {
       assert.isBelow(result.status, 400);
     });
   });
+
+  describe('redirectStatus()', () => {
+    /** @type Http */
+    let http;
+  
+    beforeEach(() => {
+      http = new Http();
+    });
+
+    it('returns a valid status code', () => {
+      const result = http.response.redirectStatus();
+      assert.typeOf(result.code, 'number', 'code is a number');
+      assert.include(http.response.redirectCodes, result.code, 'code is a redirect code');
+    });
+
+    it('uses the passed code', () => {
+      const result = http.response.redirectStatus({ code: 999 });
+      assert.equal(result.code, 999);
+    });
+
+    it('returns the status', () => {
+      const result = http.response.redirectStatus();
+      assert.typeOf(result.status, 'string', 'status is a string');
+    });
+
+    it('returns the passed status', () => {
+      const result = http.response.redirectStatus({ status: 'test' });
+      assert.equal(result.status, 'test');
+    });
+  });
 });

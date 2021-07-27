@@ -346,3 +346,25 @@ export interface HttpResponseData {
   headers: string;
   payload?: any;
 }
+
+export declare interface HttpResponseRedirectStatusInit {
+  /**
+   * The redirection code. Otherwise a random pick is used
+   */
+  code?: number;
+  /**
+   * The status message to use.
+   */
+  status?: string;
+}
+
+export declare interface HttpResponseStatusResult {
+  /**
+   * The redirection code.
+   */
+  code: number;
+  /**
+   * The status message.
+   */
+  status: string;
+}
