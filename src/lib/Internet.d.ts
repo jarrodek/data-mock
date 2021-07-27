@@ -1,10 +1,26 @@
 import { DataMockLocale } from '../../locales/types.js';
 import { DataMockInit, InternetEmailInit, InternetUsernameInit } from '../../types.js';
+import { Person } from './Person.js';
+import { Random } from './Random.js';
+import { Types } from './Types.js';
+import { Word } from './Word.js';
+
+export const randomValue: unique symbol;
+export const typesValue: unique symbol;
+export const localeValue: unique symbol;
+export const wordValue: unique symbol;
+export const personValue: unique symbol;
 
 /**
  * A library that specializes in generating internet related values.
  */
 export declare class Internet {
+  [randomValue]: Random;
+  [typesValue]: Types;
+  [wordValue]: Word;
+  [personValue]: Person;
+  [localeValue]: DataMockLocale;
+
   /**
    * @param init The library init options.
    */

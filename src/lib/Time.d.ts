@@ -1,9 +1,17 @@
+import { DataMockLocale } from '../../locales/types.js';
 import { DataMockInit, TimeHourInit, TimeMinuteInit, TimeMonthInit, TimeMonthNameInit, TimeWeekdayInit, TypeDateTimeInit } from '../../types.js';
+import { Types } from './Types.js';
+
+export const typesValue: unique symbol;
+export const localeValue: unique symbol;
 
 /**
  * Generates date/time related values.
  */
 export declare  class Time {
+  [typesValue]: Types;
+  [localeValue]: DataMockLocale;
+
   /**
    * @param init The library init options.
    */

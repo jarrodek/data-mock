@@ -1,10 +1,17 @@
 import { DataMockLocale } from '../../locales/types.js';
 import { DataMockInit } from '../../types.js';
+import { Random } from './Random.js';
+
+export const randomValue: unique symbol;
+export const localeValue: unique symbol;
 
 /**
  * A library that specializes in picking words from locale dictionary.
  */
 export class Word {
+  [randomValue]: Random;
+  [localeValue]: DataMockLocale;
+
   /**
    * @param init The library init options.
    */

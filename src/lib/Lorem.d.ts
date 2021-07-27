@@ -1,10 +1,20 @@
 import { DataMockLocale } from '../../locales/types.js';
 import { DataMockInit, LoremParagraphInit, LoremParagraphsInit, LoremSentenceInit, LoremSentencesInit, LoremSyllableInit, LoremWordInit } from '../../types.js';
+import { Random } from './Random.js';
+import { Types } from './Types.js';
+
+export const randomValue: unique symbol;
+export const typesValue: unique symbol;
+export const localeValue: unique symbol;
 
 /**
  * A library that specializes in generating string values.
  */
 export declare class Lorem {
+  [randomValue]: Random;
+  [typesValue]: Types;
+  [localeValue]: DataMockLocale;
+
   /**
    * @param init The library init options.
    */

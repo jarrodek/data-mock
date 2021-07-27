@@ -1,7 +1,17 @@
-import { DataMockLocale } from '../../locales/types.js';
-import { DataMockInit, Gender, PersonNameInit } from '../../types.js';
+import { DataMockLocale } from '../../locales/types';
+import { DataMockInit, Gender, PersonNameInit } from '../../types';
+import { Random } from './Random';
+import { Types } from './Types';
+
+export const randomValue: unique symbol;
+export const typesValue: unique symbol;
+export const localeValue: unique symbol;
 
 export declare class Person {
+  [randomValue]: Random;
+  [typesValue]: Types;
+  [localeValue]: DataMockLocale;
+
   /**
    * @param init The library init options.
    */

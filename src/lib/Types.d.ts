@@ -1,9 +1,17 @@
 import { TypeBooleanInit, TypeCharacterInit, TypeDateTimeInit, TypeFalsyInit, TypeHashInit, TypeNumberInit } from '../../types.js';
+import { MersenneTwister } from './MersenneTwister.js';
+import { Random } from './Random.js';
+
+export const randomValue: unique symbol;
+export const mtValue: unique symbol;
 
 /**
  * A class that generates different base data types.
  */
 export declare class Types {
+  [randomValue]: Random;
+  [mtValue]: MersenneTwister;
+
   constructor(seed?: number);
   seed(value: number): void;
 

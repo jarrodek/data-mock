@@ -1,10 +1,21 @@
 import { DataMockLocale } from '../../../locales/types';
 import { DataMockInit, HttpPayloadInit } from '../../../types';
+import { Lorem } from '../Lorem';
+import { Random } from '../Random';
+import { Types } from '../Types';
+
+export const randomValue: unique symbol;
+export const typesValue: unique symbol;
+export const loremValue: unique symbol;
 
 /**
  * Generates date/time related values.
  */
 export declare class HttpPayload {
+  [randomValue]: Random;
+  [typesValue]: Types;
+  [loremValue]: Lorem;
+
   /**
    * @param init The library init options.
    */

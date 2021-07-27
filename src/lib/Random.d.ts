@@ -1,4 +1,9 @@
+import { MersenneTwister } from "./MersenneTwister";
+
+export const mtValue: unique symbol;
+
 export declare class Random {
+  [mtValue]: MersenneTwister;
   constructor(seed?: number);
   seed(value: number): void;
   /**
