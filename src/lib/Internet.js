@@ -234,4 +234,12 @@ export class Internet {
     }
     return `#${redStr}${greenStr}${blueStr}`;
   }
+
+  /**
+   * @returns {string} A web browser name.
+   */
+  browser() {
+    const browsers = ['Chrome', 'Firefox', 'Safari', 'Edge', 'Internet Explorer', 'Opera', 'SeaMonkey'];
+    return this[randomValue].pickOne(browsers);
+  }
 }

@@ -8,4 +8,5 @@ export { Time } from './src/lib/Time.js';
 export { Types } from './src/lib/Types.js';
 export { Word } from './src/lib/Word.js';
 export { Har } from './src/lib/Har.js';
+export { Software } from './src/lib/Software.js';
 export * as Utils from './src/lib/Utils.js';

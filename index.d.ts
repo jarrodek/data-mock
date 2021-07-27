@@ -8,6 +8,7 @@ export { Time } from './src/lib/Time';
 export { Types } from './src/lib/Types';
 export { Word } from './src/lib/Word';
 export { Har } from './src/lib/Har';
+export { Software } from './src/lib/Software';
 export * as Utils from './src/lib/Utils';
 export { DataMockLocale } from './locales/types';
 export * from './types';

@@ -1,7 +1,7 @@
 {
   "name": "@pawel-up/data-mock",
   "description": "No-dependency, ESM, in browser data generator",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "index.js",
   "type": "module",
   "license": "MIT",
@@ -32,6 +32,7 @@
     "@esm-bundle/chai": "^4.3.4",
     "@open-wc/testing": "^2.5.33",
     "@types/chai": "^4.2.21",
+    "@types/har-format": "^1.2.7",
     "@web/dev-server": "^0.1.17",
     "@web/test-runner": "^0.13.12",
     "@web/test-runner-playwright": "^0.8.6",

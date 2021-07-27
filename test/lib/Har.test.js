@@ -30,4 +30,52 @@ describe('Har', () => {
       assert.typeOf(result.ssl, 'number');
     });
   });
+
+  describe('version()', () => {
+    /** @type Har */
+    let har;
+
+    beforeEach(() => {
+      har = new Har();
+    });
+
+    it('returns HAR version', () => {
+      const result = har.version();
+      assert.equal(result, '1.2');
+    });
+  });
+
+  describe('creator()', () => {
+    /** @type Har */
+    let har;
+
+    beforeEach(() => {
+      har = new Har();
+    });
+
+    it('returns creator info', () => {
+      const result = har.creator();
+      assert.typeOf(result, 'object', 'returns an object');
+      assert.typeOf(result.name, 'string', 'name is set');
+      assert.typeOf(result.version, 'string', 'version is set');
+      assert.typeOf(result.comment, 'string', 'comment is set');
+    });
+  });
+
+  describe('browser()', () => {
+    /** @type Har */
+    let har;
+
+    beforeEach(() => {
+      har = new Har();
+    });
+
+    it('returns browser info', () => {
+      const result = har.browser();
+      assert.typeOf(result, 'object', 'returns an object');
+      assert.typeOf(result.name, 'string', 'name is set');
+      assert.typeOf(result.version, 'string', 'version is set');
+      assert.typeOf(result.comment, 'string', 'comment is set');
+    });
+  });
 });

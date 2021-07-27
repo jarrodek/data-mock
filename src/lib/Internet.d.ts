@@ -97,4 +97,9 @@ export declare class Internet {
   port(): number;
 
   color(red?: number, green?: number, blue?: number): string;
+
+  /**
+   * @returns A web browser name.
+   */
+  browser(): string;
 }

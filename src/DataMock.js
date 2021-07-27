@@ -7,6 +7,7 @@ import { Random } from './lib/Random.js';
 import { Time } from './lib/Time.js';
 import { Word } from './lib/Word.js';
 import { Http } from './lib/Http.js';
+import { Software } from './lib/Software.js';
 
 /** @typedef {import('../types').DataMockInit} DataMockInit */
 /** @typedef {import('../locales/types').DataMockLocale} DataMockLocale */
@@ -65,6 +66,11 @@ export class DataMock {
      * @type {Http}
      */
     this.http = new Http({ ...init, locale: this[localeValue]});
+    /**
+     * Software related generator.
+     * @type {Software}
+     */
+    this.software = new Software({ ...init, locale: this[localeValue]});
   }
 
   /**
@@ -79,6 +85,7 @@ export class DataMock {
     this.time.seed(value);
     this.word.seed(value);
     this.http.seed(value);
+    this.software.seed(value);
   }
 
   /**

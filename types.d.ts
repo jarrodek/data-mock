@@ -82,6 +82,31 @@ export interface TypeHashInit {
   length?: number;
 }
 
+export class Range {
+  min?: number;
+  max?: number;
+}
+
+export interface TypeVersionInit {
+  /**
+   * The format of the version string. 
+   * @default symVer
+   */
+  format?: 'symVer' | 'major' | 'majorMinor';
+  /**
+   * The range of the major version or the value to use.
+   */
+  major?: Range|number;
+  /**
+   * The range of the minor version or the value to use.
+   */
+  minor?: Range|number;
+  /**
+   * The range of the patch version or the value to use.
+   */
+  patch?: Range|number;
+}
+
 export interface LoremSyllableInit {
   /**
    * The number of characters in the word.
