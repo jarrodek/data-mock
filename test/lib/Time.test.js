@@ -153,4 +153,65 @@ describe('Time()', () => {
       }
     });
   });
+
+  describe('dateOnly()', () => {
+    /** @type Time */
+    let time;
+
+    before(() => {
+      time = new Time();
+    });
+
+    it('returns a date format', () => {
+      const result = time.dateOnly();
+      assert.match(result, /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/);
+    });
+  });
+
+  describe('timeOnly()', () => {
+    /** @type Time */
+    let time;
+
+    before(() => {
+      time = new Time();
+    });
+
+    it('returns a time format', () => {
+      const result = time.timeOnly();
+      assert.match(result, /^[0-9]{2}:[0-9]{2}:[0-9]{2}$/);
+    });
+  });
+
+  describe('dateTime()', () => {
+    /** @type Time */
+    let time;
+
+    before(() => {
+      time = new Time();
+    });
+
+    it('returns the rfc3339 format', () => {
+      const result = time.dateTime('rfc3339');
+      assert.match(result, /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3}Z$/);
+    });
+
+    it('returns the rfc2616 format', () => {
+      const result = time.dateTime('rfc2616');
+      assert.match(result, /^[^,]+, [0-9]{1,2} \w+ [0-9]{4} [0-9]{1,2}:[0-9]{2}:[0-9]{2} GMT$/);
+    });
+  });
+
+  describe('dateTimeOnly()', () => {
+    /** @type Time */
+    let time;
+
+    before(() => {
+      time = new Time();
+    });
+
+    it('returns a date + time format', () => {
+      const result = time.dateTimeOnly();
+      assert.match(result, /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$/);
+    });
+  });
 });

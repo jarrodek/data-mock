@@ -212,4 +212,66 @@ export class Time {
     now.setHours(0, 0, 0, 0);
     return now.getTime();
   }
+
+  /**
+   * @param {TypeDateTimeInit=} init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
+   * @returns {string} A random date in the range and `YYYY-MM-DD` format.
+   */
+  dateOnly(init) {
+    const d = this.date(init);
+    const year = d.getFullYear();
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const day = d.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  /**
+   * @param {TypeDateTimeInit=} init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
+   * @returns {string} A random time in the range and `HH-mm-ss` format.
+   */
+  timeOnly(init) {
+    const d = this.date(init);
+    const hours = d.getHours().toString().padStart(2, '0');
+    const minutes = d.getMinutes().toString().padStart(2, '0');
+    const seconds = d.getSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+  /**
+   * @param {'rfc3339' | 'rfc2616'=} format The data time format
+   * @param {TypeDateTimeInit=} init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
+   * @returns {string} A random date time in the range and format specified by the `format` argument.
+   */
+  dateTime(format='rfc3339', init) {
+    const d = this.date(init);
+    if (format === 'rfc2616') {
+      return d.toUTCString();
+    }
+    if (format === 'rfc3339') {
+      const year = d.getUTCFullYear();
+      const month = (d.getUTCMonth() + 1).toString().padStart(2, '0');
+      const day = d.getUTCDate().toString().padStart(2, '0');
+      const hours = d.getUTCHours().toString().padStart(2, '0');
+      const minutes = d.getUTCMinutes().toString().padStart(2, '0');
+      const seconds = d.getUTCSeconds().toString().padStart(2, '0');
+      const milliseconds = d.getUTCMilliseconds().toString().padStart(3, '0');
+      return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+    } 
+    return '';
+  }
+
+  /**
+   * @param {TypeDateTimeInit=} init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
+   * @returns {string} A random date time in the range and `YYYY-MM-DDTHH-mm-ss` format.
+   */
+  dateTimeOnly(init) {
+    const d = this.date(init);
+    const year = d.getFullYear();
+    const month = (d.getMonth() + 1).toString().padStart(2, '0');
+    const day = d.getDate().toString().padStart(2, '0');
+    const hours = d.getHours().toString().padStart(2, '0');
+    const minutes = d.getMinutes().toString().padStart(2, '0');
+    const seconds = d.getSeconds().toString().padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+  }
 }

@@ -98,4 +98,29 @@ export declare  class Time {
    * @returns {number} The timestamp of the midnight of the given time.
    */
   midnight(time?: number): number;
+
+  /**
+   * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
+   * @returns A random date in the range and `YYYY-MM-DD` format.
+   */
+  dateOnly(init?: TypeDateTimeInit): string;
+
+  /**
+   * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
+   * @returns A random time in the range and `HH-mm-ss` format.
+   */
+  timeOnly(init?: TypeDateTimeInit): string;
+
+  /**
+   * @param format The data time format
+   * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
+   * @returns A random date time in the range and format specified by the `format` argument.
+   */
+  dateTime(format?: 'rfc3339' | 'rfc2616', init?: TypeDateTimeInit): string;
+
+  /**
+   * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
+   * @returns A random date time in the range and `YYYY-MM-DDTHH-mm-ss` format.
+   */
+  dateTimeOnly(init?: TypeDateTimeInit): string;
 }
