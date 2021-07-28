@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { assert } from '@esm-bundle/chai';
 import { Types } from '../../index.js';
 
@@ -188,42 +189,42 @@ describe('Types', () => {
     });
 
     it('returns alpha character only', () => {
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 1024; i++) {
         const result = types.character({ alpha: true });
         assert.match(result, /[A-Za-z]/);
       }
     });
 
     it('returns lowercase alpha character only', () => {
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 1024; i++) {
         const result = types.character({ alpha: true, casing: 'lower' });
         assert.match(result, /[a-z]/);
       }
     });
 
     it('returns uppercase alpha character only', () => {
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 1024; i++) {
         const result = types.character({ alpha: true, casing: 'upper' });
         assert.match(result, /[A-Z]/);
       }
     });
 
     it('returns numeric character only', () => {
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 1024; i++) {
         const result = types.character({ numeric: true });
         assert.match(result, /[0-9]/);
       }
     });
 
     it('returns symbol character only', () => {
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 1024; i++) {
         const result = types.character({ symbols: true });
         assert.match(result, /[!@#$%^&*()[\]]/);
       }
     });
 
     it('returns symbol and alpha character only', () => {
-      const results = new Array(50).fill(0).map(() => types.character({ symbols: true, alpha: true } ));
+      const results = new Array(1024).fill(0).map(() => types.character({ symbols: true, alpha: true } ));
       const hasAlpha = results.some(i => i.match(/[A-Za-z]/));
       const hasSymbol = results.some(i => i.match(/[!@#$%^&*()[\]]/));
       assert.isTrue(hasAlpha, 'has alpha character');
@@ -231,9 +232,9 @@ describe('Types', () => {
     });
 
     it('returns numeric and alpha character only', () => {
-      const results = new Array(50).fill(0).map(() => types.character({ numeric: true, alpha: true } ));
-      const hasAlpha = results.some(i => i.match(/[A-Za-z]/));
-      const hasNumeric = results.some(i => i.match(/[0-9]/));
+      const results = new Array(1024).fill(0).map(() => types.character({ numeric: true, alpha: true } ));
+      const hasAlpha = results.some(i => i.match(/[A-Za-z]*/));
+      const hasNumeric = results.some(i => i.match(/[0-9]*/));
       assert.isTrue(hasAlpha, 'has alpha character');
       assert.isTrue(hasNumeric, 'has numeric character');
     });
