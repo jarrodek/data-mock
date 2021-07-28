@@ -18,6 +18,10 @@ export declare  class Time {
   constructor(init?: DataMockInit);
   seed(value: number): void;
   /**
+   * @param locale The locale to set. When nothing is passed then it uses the default locale.
+   */
+  locale(locale?: DataMockLocale): void;
+  /**
    * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
    * @returns A random date in a range.
    */
@@ -87,4 +91,11 @@ export declare  class Time {
    * @returns The name of the weekday. Note, `en` locale starts the week on Monday.
    */
   weekdayName(init?: TimeMonthNameInit): string;
+
+  /**
+   * Sets a midnight on the timestamp.
+   * @param {number=} time The timestamp to use. When not set it computes the midnight of today.
+   * @returns {number} The timestamp of the midnight of the given time.
+   */
+  midnight(time?: number): number;
 }

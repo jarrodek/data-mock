@@ -8,6 +8,7 @@ import enLocale from '../../locales/en/index.js';
 /** @typedef {import('../../types').TimeMonthInit} TimeMonthInit */
 /** @typedef {import('../../types').TimeMonthNameInit} TimeMonthNameInit */
 /** @typedef {import('../../types').TimeWeekdayInit} TimeWeekdayInit */
+/** @typedef {import('../../locales/types').DataMockLocale} DataMockLocale */
 
 export const typesValue = Symbol('typesValue');
 export const localeValue = Symbol('localeValue');
@@ -35,6 +36,13 @@ export class Time {
    */
   seed(value) {
     this[typesValue].seed(value);
+  }
+
+  /**
+   * @param {DataMockLocale=} locale The locale to set. When nothing is passed then it uses the default locale.
+   */
+  locale(locale) {
+    this[localeValue] = locale || enLocale;
   }
 
   /**
@@ -192,5 +200,16 @@ export class Time {
     const index = this.weekday(init);
     const items = this.weekdays(init.abbr);
     return items[index -1];
+  }
+
+  /**
+   * Sets a midnight on the timestamp.
+   * @param {number=} time The timestamp to use. When not set it computes the midnight of today.
+   * @returns {number} The timestamp of the midnight of the given time.
+   */
+  midnight(time = Date.now()) {
+    const now = new Date(time);
+    now.setHours(0, 0, 0, 0);
+    return now.getTime();
   }
 }
