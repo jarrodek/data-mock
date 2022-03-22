@@ -3,16 +3,27 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["es2019", "dom"],
+    "noEmitOnError": true,
+    "lib": ["ES2021", "DOM"],
     "allowJs": true,
     "checkJs": true,
-    "noEmit": true,
-    "strict": false,
+    "strict": true,
     "noImplicitThis": true,
+    "noImplicitAny": true,
     "alwaysStrict": true,
     "esModuleInterop": true,
-    "plugins": []
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "./build",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": false
   },
-  "include": ["**/*.js", "**/*.d.ts"],
+  "include": [
+    "src/**/*.ts", 
+    "locales/**/*.ts", 
+    // "test/**/*.ts", 
+    "index.ts"
+  ],
   "exclude": []
 }

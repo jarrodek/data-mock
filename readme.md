@@ -2,8 +2,6 @@
 
 A data generation library that helps mocking different schemes.
 
-> This is a work in progress.
-
 ## Usage
 
 ### Installation
@@ -24,7 +22,7 @@ Most likely you want to use any of the original libraries as they have a getter 
 
 ```sh
 git clone https://github.com/jarrodek/data-mock
-cd api-documentation
+cd data-mock
 npm install
 ```
 

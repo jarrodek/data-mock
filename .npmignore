@@ -1,0 +1,9 @@
+.*
+coverage/
+docs/
+scripts/
+test/
+commitlint.config.cjs
+index.ts
+tsconfig.json
+web-test-runner.config.js
