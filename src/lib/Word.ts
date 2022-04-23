@@ -1,9 +1,9 @@
 import { Random } from './Random.js';
 import enLocale from '../../locales/en/index.js';
-import { DataMockInit } from '../Types.js';
+import { IDataMockInit } from '../Types.js';
 import { DataMockLocale } from '../../locales/Types.js';
 
-function getListItem(random: Random, list: string[], size?: number) {
+function getListItem(random: Random, list: string[], size?: number): string {
   let items = list;
   if (typeof size === 'number') {
     items = items.filter(i => i.length === size);
@@ -27,7 +27,7 @@ export class Word {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit={}) {
+  constructor(init: IDataMockInit={}) {
     this[randomValue] = new Random(init.seed);
     this[localeValue] = init.locale || enLocale;
   }

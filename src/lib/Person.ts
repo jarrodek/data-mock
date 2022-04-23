@@ -1,7 +1,7 @@
 import { Types } from './Types.js';
 import { Random } from './Random.js';
 import enLocale from '../../locales/en/index.js';
-import { DataMockInit, PersonNameInit, Gender,  } from '../Types.js';
+import { IDataMockInit, IPersonNameInit, Gender,  } from '../Types.js';
 import { DataMockLocale, LocalePersonTitle } from '../../locales/Types.js';
 
 const genderPool: Gender[] = ['male', 'female'];
@@ -16,9 +16,9 @@ export class Person {
   [localeValue]: DataMockLocale;
 
   /**
-   * @param {DataMockInit=} init The library init options.
+   * @param {IDataMockInit=} init The library init options.
    */
-  constructor(init: DataMockInit={}) {
+  constructor(init: IDataMockInit={}) {
     this[typesValue] = new Types(init.seed);
     this[randomValue] = new Random(init.seed);
     this[localeValue] = init.locale || enLocale;
@@ -78,7 +78,7 @@ export class Person {
   /**
    * @returns Randomly picked full name of a person.
    */
-  name(init: PersonNameInit = {}): string {
+  name(init: IPersonNameInit = {}): string {
     const { firstName, lastName, gender } = init;
     const parts = [];
     if (this[typesValue].boolean({ likelihood: 10 })) {

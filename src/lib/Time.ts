@@ -1,6 +1,6 @@
 import { Types } from './Types.js';
 import enLocale from '../../locales/en/index.js';
-import { DataMockInit, TypeDateTimeInit, TimeHourInit, TimeMinuteInit, TimeMonthInit, TimeMonthNameInit, TimeWeekdayInit } from '../Types.js';
+import { IDataMockInit, ITypeDateTimeInit, ITimeHourInit, ITimeMinuteInit, ITimeMonthInit, ITimeMonthNameInit, ITimeWeekdayInit } from '../Types.js';
 import { DataMockLocale } from '../../locales/Types.js';
 
 export const typesValue = Symbol('typesValue');
@@ -15,7 +15,7 @@ export class Time {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit={}) {
+  constructor(init: IDataMockInit={}) {
     this[typesValue] = new Types(init.seed);
     this[localeValue] = init.locale || enLocale;
   }
@@ -36,7 +36,7 @@ export class Time {
    * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
    * @returns A random date in a range.
    */
-  date(init?: TypeDateTimeInit): Date {
+  date(init?: ITypeDateTimeInit): Date {
     return this[typesValue].datetime(init);
   }
 
@@ -51,7 +51,7 @@ export class Time {
    * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
    * @returns A timestamp for the generated date.
    */
-  timestamp(init?: TypeDateTimeInit): number {
+  timestamp(init?: ITypeDateTimeInit): number {
     const d = this[typesValue].datetime(init);
     return d.getTime() / 1000;
   }
@@ -60,7 +60,7 @@ export class Time {
    * Note, in 24hr clock the generated value for an hour that is less than 10 will be missing zero in the fist position.
    * @returns The value for an hour. 
    */
-  hour(init: TimeHourInit = {}): number {
+  hour(init: ITimeHourInit = {}): number {
     const opts = { ...init };
     if (typeof opts.min !== 'number') {
       opts.min = opts.twentyFour ? 0 : 1;
@@ -84,7 +84,7 @@ export class Time {
    * Note, the generated value that is less than 10 will be missing zero in the fist position.
    * @returns The value for a minute. 
    */
-  minute(init: TimeMinuteInit = {}): number {
+  minute(init: ITimeMinuteInit = {}): number {
     const { min = 0, max = 59 } = init;
     if (min < 0) {
       throw new RangeError(`Provided value ${min} for min is less than 0.`);
@@ -115,7 +115,7 @@ export class Time {
   /**
    * @returns The number of the month, 1-based.
    */
-  month(init: TimeMonthInit = {}): number {
+  month(init: ITimeMonthInit = {}): number {
     const { min = 1, max = 12 } = init;
     if (min < 1) {
       throw new RangeError(`Provided value ${min} for min is less than 0.`);
@@ -132,7 +132,7 @@ export class Time {
   /**
    * @returns Name of the month.
    */
-  monthName(init: TimeMonthNameInit = {}): string {
+  monthName(init: ITimeMonthNameInit = {}): string {
     const index = this.month(init);
     const items = this.months(init.abbr);
     return items[index -1];
@@ -161,7 +161,7 @@ export class Time {
   /**
    * @returns The number of the weekday, 1-based.
    */
-  weekday(init: TimeWeekdayInit = {}): number {
+  weekday(init: ITimeWeekdayInit = {}): number {
     const { min = 1, max = 7 } = init;
     if (min < 1) {
       throw new RangeError(`Provided value ${min} for min is less than 0.`);
@@ -178,7 +178,7 @@ export class Time {
   /**
    * @returns The name of the weekday. Note, `en` locale starts the week on Monday.
    */
-  weekdayName(init: TimeMonthNameInit = {}): string {
+  weekdayName(init: ITimeMonthNameInit = {}): string {
     const index = this.weekday(init);
     const items = this.weekdays(init.abbr);
     return items[index -1];
@@ -199,7 +199,7 @@ export class Time {
    * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
    * @returns A random date in the range and `YYYY-MM-DD` format.
    */
-  dateOnly(init?: TypeDateTimeInit): string {
+  dateOnly(init?: ITypeDateTimeInit): string {
     const d = this.date(init);
     const year = d.getFullYear();
     const month = (d.getMonth() + 1).toString().padStart(2, '0');
@@ -211,7 +211,7 @@ export class Time {
    * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
    * @returns A random time in the range and `HH-mm-ss` format.
    */
-  timeOnly(init?: TypeDateTimeInit): string {
+  timeOnly(init?: ITypeDateTimeInit): string {
     const d = this.date(init);
     const hours = d.getHours().toString().padStart(2, '0');
     const minutes = d.getMinutes().toString().padStart(2, '0');
@@ -224,7 +224,7 @@ export class Time {
    * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
    * @returns A random date time in the range and format specified by the `format` argument.
    */
-  dateTime(format: 'rfc3339' | 'rfc2616' = 'rfc3339', init?: TypeDateTimeInit): string {
+  dateTime(format: 'rfc3339' | 'rfc2616' = 'rfc3339', init?: ITypeDateTimeInit): string {
     const d = this.date(init);
     if (format === 'rfc2616') {
       return d.toUTCString();
@@ -246,7 +246,7 @@ export class Time {
    * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
    * @returns A random date time in the range and `YYYY-MM-DDTHH-mm-ss` format.
    */
-  dateTimeOnly(init?: TypeDateTimeInit): string {
+  dateTimeOnly(init?: ITypeDateTimeInit): string {
     const d = this.date(init);
     const year = d.getFullYear();
     const month = (d.getMonth() + 1).toString().padStart(2, '0');

@@ -1,11 +1,11 @@
 /* eslint-disable no-continue */
 import { Random } from '../Random.js';
 import { Types } from '../Types.js';
-import { HeadersSchema, IHeadersSchema, GenerateInit } from './HttpHeadersSchema.js';
+import { HeadersSchema, IHeadersSchema, GenerateInit } from './HeadersSchema.js';
 import { Time } from '../Time.js';
 import { Lorem } from '../Lorem.js';
 import { Internet } from '../Internet.js';
-import { DataMockInit, HttpHeadersInit } from '../../Types.js';
+import { IDataMockInit, IHttpHeadersInit, IHttpPayloadInit } from '../../Types.js';
 import { DataMockLocale } from '../../../locales/Types.js';
 
 export const randomValue = Symbol('randomValue');
@@ -30,7 +30,7 @@ const singularHeaders = [
   'date',
 ];
 
-export class HttpHeaders {
+export default class HttpHeadersGenerator {
   [randomValue]: Random;
   [typesValue]: Types;
   [timeValue]: Time;
@@ -40,7 +40,7 @@ export class HttpHeaders {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit={}) {
+  constructor(init: IDataMockInit={}) {
     this[randomValue] = new Random(init.seed);
     this[typesValue] = new Types(init.seed);
     this[timeValue] = new Time(init);
@@ -74,7 +74,30 @@ export class HttpHeaders {
     };
   }
 
-  contentType(): string {
+  /**
+   * Generates a content type header for the given payload options.
+   */
+  contentType(init: IHttpPayloadInit): string | undefined;
+  
+  /**
+   * Generates a random content type header
+   */
+  contentType(): string;
+
+  contentType(init?: IHttpPayloadInit): string | undefined {
+    if (init === undefined) {
+      return this._pickContentType();
+    }
+    if (init.noPayload) {
+      return undefined;
+    }
+    if (init.contentType) {
+      return init.contentType;
+    }
+    return this._pickContentType();
+  }
+
+  protected _pickContentType(): string {
     return HeadersSchema["content-type"].generate(this[getInit]());
   }
 
@@ -138,7 +161,7 @@ export class HttpHeaders {
    * Generates a list of request or response headers.
    * @param type Either `request` or `response`
    */
-  headers(type: 'request'|'response', init: HttpHeadersInit={}): string {
+  headers(type: 'request'|'response', init: IHttpHeadersInit={}): string {
     const { group, length, max=10, min=0, mime, pool, noMulti } = init;
 
     const addContentType = !!mime;

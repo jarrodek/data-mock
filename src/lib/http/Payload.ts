@@ -3,17 +3,24 @@ import { Lorem } from '../Lorem.js';
 import { Random } from '../Random.js';
 import { Internet } from '../Internet.js';
 import { Svg } from '../Svg.js';
-import { DataMockInit, HttpPayloadInit, ISvgImageInit } from '../../Types.js';
+import { IDataMockInit, IHttpPayloadInit, ISvgImageInit } from '../../Types.js';
 import { DataMockLocale } from '../../../locales/Types.js';
 
 export const randomValue = Symbol('randomValue');
 export const typesValue = Symbol('typesValue');
 export const loremValue = Symbol('loremValue');
 
+export const SupportedPayloads = [
+  'application/x-www-form-urlencoded',
+  'application/json',
+  'application/xml',
+  'image/svg+xml',
+];
+
 /**
  * Generates date/time related values.
  */
-export class HttpPayload {
+export default class HttpPayloadGenerator {
   [typesValue]: Types;
   [randomValue]: Random;
   [loremValue]: Lorem;
@@ -24,7 +31,7 @@ export class HttpPayload {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit = {}) {
+  constructor(init: IDataMockInit = {}) {
     this[typesValue] = new Types(init.seed);
     this[randomValue] = new Random(init.seed);
     this[loremValue] = new Lorem(init);
@@ -51,7 +58,7 @@ export class HttpPayload {
    * 
    * @returns `true` when the request can carry a payload and `false` otherwise.
    */
-  isPayload(init: HttpPayloadInit = {}): boolean {
+  isPayload(init: IHttpPayloadInit = {}): boolean {
     let isPayload = false;
     if (!init.noPayload) {
       if (init.force || this[typesValue].boolean()) {
@@ -70,22 +77,48 @@ export class HttpPayload {
     if (!mime) {
       return true;
     }
-    return [
-      'application/x-www-form-urlencoded',
-      'application/json',
-      'application/xml',
-      'image/svg+xml',
-    ].includes(mime);
+    return SupportedPayloads.includes(mime);
   }
+
+  /**
+   * Generates a random payload data for the given options.
+   */
+  payload(options: IHttpPayloadInit): string | string;
 
   /**
    * Generates a random payload data for given mime type.
    * 
-   * @param mime The ime type. When not set it picks one.
+   * @param mime The mime type. When not set it picks one.
    */
-  payload(mime?: string): string {
-    const ct = mime || this[randomValue].pickOne(['application/x-www-form-urlencoded', 'application/json', 'application/xml']);
-    switch (ct) {
+  payload(mime: string): string;
+
+  /**
+   * Generates a random payload data.
+   */
+  payload(): string;
+
+  /**
+   * Generates a random payload data for given mime type.
+   * 
+   * @param init Either the mime type, payload options, or nothing to generate a payload for a random mime.
+   */
+  payload(init?: string | IHttpPayloadInit): string | undefined {
+    let ct;
+    if (typeof init === 'string') {
+      ct = init;
+    } else if (init === undefined) {
+      ct = this[randomValue].pickOne(SupportedPayloads);
+    } else if (!init.noPayload && init.contentType) {
+      ct = init.contentType
+    }
+    if (!ct) {
+      return undefined;
+    }
+    return this._payloadMime(ct);
+  }
+
+  protected _payloadMime(mime: string): string {
+    switch (mime) {
       case 'application/x-www-form-urlencoded':
         return this.urlEncoded();
       case 'application/json':

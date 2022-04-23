@@ -1,14 +1,14 @@
 import { CHARS_LOWER, CHARS_UPPER, NUMBERS } from './Utils.js';
 import { MersenneTwister } from './MersenneTwister.js';
-import { TypeNumberInit, TypeCharacterInit, TypeDateTimeInit }  from '../Types.js';
+import { ITypeNumberInit, ITypeCharacterInit, ITypeDateTimeInit }  from '../Types.js';
 
 /**
  * Generates a pseudo-random number.
  * @param init When passed a number it generates an integer in a range from [0, init]
  * @returns A pseudo-random number.
  */
-export function number(mt: MersenneTwister, init: number | TypeNumberInit = {}): number {
-  let opts: TypeNumberInit = {};
+export function number(mt: MersenneTwister, init: number | ITypeNumberInit = {}): number {
+  let opts: ITypeNumberInit = {};
   if (typeof init === 'number') {
     opts.max = init;
   } else if (typeof init === 'object') {
@@ -39,8 +39,8 @@ export function number(mt: MersenneTwister, init: number | TypeNumberInit = {}):
  * @param init When passed a number it generates an float with this precision
  * @returns A pseudo-random floating point number.
  */
-export function float(mt: MersenneTwister, init: number|TypeNumberInit = {}): number {
-  let opts: TypeNumberInit = {};
+export function float(mt: MersenneTwister, init: number|ITypeNumberInit = {}): number {
+  let opts: ITypeNumberInit = {};
   if (typeof init === 'number') {
     opts.precision = init;
   } else if (typeof init === 'object') {
@@ -72,8 +72,8 @@ export function string(mt: MersenneTwister, size=10, chars?: string): string {
   return generated.join('');
 }
 
-export function character(mt: MersenneTwister, init: TypeCharacterInit = {}): string {
-  const opts: TypeCharacterInit = { ...init };
+export function character(mt: MersenneTwister, init: ITypeCharacterInit = {}): string {
+  const opts: ITypeCharacterInit = { ...init };
   let letters: string;
   switch (opts.casing) {
     case 'lower': letters = CHARS_LOWER; break;
@@ -103,8 +103,8 @@ export function character(mt: MersenneTwister, init: TypeCharacterInit = {}): st
  * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
  * @returns A random date in a range.
  */
-export function date(mt: MersenneTwister, init: number | TypeDateTimeInit = {}): Date {
-  let opts: TypeDateTimeInit = {};
+export function date(mt: MersenneTwister, init: number | ITypeDateTimeInit = {}): Date {
+  let opts: ITypeDateTimeInit = {};
   if (typeof init === 'number') {
     opts.max = init;
   } else if (typeof init === 'object') {

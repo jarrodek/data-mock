@@ -1,6 +1,6 @@
 import { DataMockLocale } from "../locales/Types.js";
 
-export interface DataMockInit {
+export interface IDataMockInit {
   /**
    * The locale to use. By default it loads the `en` locale.
    */
@@ -8,7 +8,7 @@ export interface DataMockInit {
   seed?: number;
 }
 
-export interface TypeNumberInit {
+export interface ITypeNumberInit {
   /**
    * The minimal value to generate (inclusive).
    */
@@ -23,7 +23,7 @@ export interface TypeNumberInit {
   precision?: number;
 }
 
-export interface TypeDateTimeInit {
+export interface ITypeDateTimeInit {
   /**
    * The minimal timestamp to generate (inclusive).
    */
@@ -34,21 +34,21 @@ export interface TypeDateTimeInit {
   max?: number;
 }
 
-export interface TypeBooleanInit {
+export interface ITypeBooleanInit {
   /**
    * The likelihood of receiving a true or false value back.
    */
   likelihood?: number;
 }
 
-export interface TypeFalsyInit {
+export interface ITypeFalsyInit {
   /**
    * The pool of falsy values to pick from.
    */
   pool?: any[];
 }
 
-export interface TypeCharacterInit {
+export interface ITypeCharacterInit {
   /**
    * The casing of the character.
    */
@@ -71,7 +71,7 @@ export interface TypeCharacterInit {
   symbols?: boolean;
 }
 
-export interface TypeHashInit {
+export interface ITypeHashInit {
   /**
    * The casing of the character.
    */
@@ -87,7 +87,7 @@ export class Range {
   max?: number;
 }
 
-export interface TypeVersionInit {
+export interface ITypeVersionInit {
   /**
    * The format of the version string. 
    * @default symVer
@@ -107,7 +107,7 @@ export interface TypeVersionInit {
   patch?: Range|number;
 }
 
-export interface LoremSyllableInit {
+export interface ILoremSyllableInit {
   /**
    * The number of characters in the word.
    */
@@ -118,7 +118,7 @@ export interface LoremSyllableInit {
   capitalize?: boolean;
 }
 
-export interface LoremWordInit extends LoremSyllableInit {
+export interface ILoremWordInit extends ILoremSyllableInit {
   /**
    * The number of syllables in the word.
    * Cannot be combined with `length`.
@@ -126,7 +126,7 @@ export interface LoremWordInit extends LoremSyllableInit {
   syllables?: number;
 }
 
-export interface LoremSentenceInit {
+export interface ILoremSentenceInit {
   /**
    * The number of words in the sentence.
    */
@@ -138,14 +138,14 @@ export interface LoremSentenceInit {
   punctuation?: string | boolean;
 }
 
-export interface LoremSentencesInit {
+export interface ILoremSentencesInit {
   /**
    * The number of sentences in the result.
    */
   size?: number;
 }
 
-export interface LoremParagraphInit {
+export interface ILoremParagraphInit {
   /**
    * The number of sentences in the result.
    */
@@ -157,7 +157,7 @@ export interface LoremParagraphInit {
   lineBreak?: boolean;
 }
 
-export interface LoremParagraphsInit {
+export interface ILoremParagraphsInit {
   /**
    * The number of paragraph in the result.
    */
@@ -168,7 +168,7 @@ export interface LoremParagraphsInit {
   separator?: string;
 }
 
-export interface TimeHourInit {
+export interface ITimeHourInit {
   /**
    * Whether to use 24hr clock.
    */
@@ -183,7 +183,7 @@ export interface TimeHourInit {
   max?: number;
 }
 
-export interface TimeMinuteInit {
+export interface ITimeMinuteInit {
   /**
    * The minimum minute
    */
@@ -194,7 +194,7 @@ export interface TimeMinuteInit {
   max?: number;
 }
 
-export interface TimeMonthInit {
+export interface ITimeMonthInit {
   /**
    * The minimum month, 1-based [1, 12]
    */
@@ -205,14 +205,14 @@ export interface TimeMonthInit {
   max?: number;
 }
 
-export interface TimeMonthNameInit extends TimeMonthInit {
+export interface ITimeMonthNameInit extends ITimeMonthInit {
   /**
    * Whether to returns abbreviation rather than the full name.
    */
   abbr?: boolean;
 }
 
-export interface TimeWeekdayInit {
+export interface ITimeWeekdayInit {
   /**
    * The minimum day, 1-based [1, 7]
    */
@@ -223,18 +223,18 @@ export interface TimeWeekdayInit {
   max?: number;
 }
 
-export interface TimeWeekdayNameInit extends TimeWeekdayInit {
+export interface ITimeWeekdayNameInit extends ITimeWeekdayInit {
   /**
    * Whether to returns abbreviation rather than the full name.
    */
   abbr?: boolean;
 }
 
-export interface InternetUsernameInit extends PersonName {
+export interface IInternetUsernameInit extends IPersonName {
 
 }
 
-export interface InternetEmailInit extends InternetUsernameInit {
+export interface IInternetEmailInit extends IInternetUsernameInit {
 
   /**
    * Provider name.
@@ -242,7 +242,7 @@ export interface InternetEmailInit extends InternetUsernameInit {
   provider?: string;
 }
 
-export interface PersonName {
+export interface IPersonName {
   /**
    * User's first name
    */
@@ -253,24 +253,29 @@ export interface PersonName {
   lastName?: string;
 }
 
-export interface PersonNameInit extends PersonName {
+export interface IPersonNameInit extends IPersonName {
   gender?: Gender;
 }
 
 export type Gender = 'male' | 'female';
 
-export interface HttpPayloadInit {
+export interface IHttpPayloadInit {
   /**
    * If set the request will not have payload
    */
   noPayload?: boolean;
   /**
-   * The request will always have a payload. The `noPayload` property takes precedence over this setting.
+   * The request always has a payload. The `noPayload` property takes precedence over this setting.
    */
   force?: boolean;
+  /**
+   * The content type to generate the body for.
+   * Has no effect when `noPayload` is set.
+   */
+  contentType?: string;
 }
 
-export interface HttpOperationInit {
+export interface IHttpOperationInit {
   /**
    * The list of operations to list from.
    */
@@ -286,7 +291,7 @@ export interface HttpOperationInit {
   operation?: string;
 }
 
-export interface HttpHeadersInit { 
+export interface IHttpHeadersInit { 
   /**
    * THe pool of header names to use.
    */
@@ -321,13 +326,13 @@ export interface HttpHeadersInit {
   noMulti?: boolean;
 }
 
-export interface HttpRequestInit {
-  headers?: HttpHeadersInit;
-  payload?: HttpPayloadInit;
-  method?: HttpOperationInit;
+export interface IHttpRequestInit {
+  headers?: IHttpHeadersInit;
+  payload?: IHttpPayloadInit;
+  method?: IHttpOperationInit;
 }
 
-export interface HttpRequest {
+export interface IHttpRequest {
   /**
    * The generated request URL.
    */
@@ -346,7 +351,7 @@ export interface HttpRequest {
   payload?: string;
 }
 
-export interface HarTiming {
+export interface IHarTiming {
   blocked: number;
   connect: number;
   receive: number;
@@ -356,23 +361,24 @@ export interface HarTiming {
   ssl?: number;
 }
 
-export interface HarTimingInit {
+export interface IHarTimingInit {
   ssl?: boolean;
 }
 
-export interface HttpResponseInit {
-  noBody?: boolean;
+export interface IHttpResponseInit {
   statusGroup?: number;
+  headers?: IHttpHeadersInit;
+  payload?: IHttpPayloadInit;
 }
 
-export interface HttpResponseData {
+export interface IHttpResponseData {
   status: number;
   statusText: string;
   headers: string;
   payload?: any;
 }
 
-export interface HttpResponseRedirectStatusInit {
+export interface IHttpResponseRedirectStatusInit {
   /**
    * The redirection code. Otherwise a random pick is used
    */
@@ -383,7 +389,7 @@ export interface HttpResponseRedirectStatusInit {
   status?: string;
 }
 
-export interface HttpResponseStatusResult {
+export interface IHttpResponseStatusResult {
   /**
    * The redirection code.
    */

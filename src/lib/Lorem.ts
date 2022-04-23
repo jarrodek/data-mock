@@ -2,7 +2,7 @@ import { Types } from './Types.js';
 import { Random } from './Random.js';
 import enLocale from '../../locales/en/index.js';
 import { slug } from './Utils.js';
-import { DataMockInit, LoremWordInit, LoremSyllableInit, LoremSentenceInit, LoremSentencesInit, LoremParagraphInit, LoremParagraphsInit } from '../Types.js';
+import { IDataMockInit, ILoremWordInit, ILoremSyllableInit, ILoremSentenceInit, ILoremSentencesInit, ILoremParagraphInit, ILoremParagraphsInit } from '../Types.js';
 import { DataMockLocale } from '../../locales/Types.js';
 
 export const randomValue = Symbol('randomValue');
@@ -19,7 +19,7 @@ export class Lorem {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit={}) {
+  constructor(init: IDataMockInit={}) {
     this[typesValue] = new Types(init.seed);
     this[randomValue] = new Random(init.seed);
     this[localeValue] = init.locale || enLocale;
@@ -37,7 +37,7 @@ export class Lorem {
     this[localeValue] = locale || enLocale;
   }
 
-  word(init: LoremWordInit = {}): string {
+  word(init: ILoremWordInit = {}): string {
     const opts = { ...init };
     if (typeof opts.syllables === 'number' && typeof opts.length === 'number') {
       throw new RangeError(`Cannot specify both "syllables" and "length".`);
@@ -80,8 +80,8 @@ export class Lorem {
   /**
    * @returns A sentence of words separated with a space.
    */
-  sentence(init: LoremSentenceInit = {}): string {
-    const opts: LoremSentenceInit = { ...init };
+  sentence(init: ILoremSentenceInit = {}): string {
+    const opts: ILoremSentenceInit = { ...init };
     const { words = this[typesValue].number({ min: 12, max: 18 }) } = opts;
     let result = new Array(words).fill('').map(() => this.word()).join(' ');
     result = this.capitalize(result);
@@ -98,8 +98,8 @@ export class Lorem {
   /** 
    * @returns Generates sentences.
    */
-  sentences(init: LoremSentencesInit|number = {}): string {
-    let opts: LoremSentencesInit = {}
+  sentences(init: ILoremSentencesInit|number = {}): string {
+    let opts: ILoremSentencesInit = {}
     if (typeof init === 'number') {
       opts.size = init;
     } else {
@@ -122,8 +122,8 @@ export class Lorem {
    * @param init When number then it is a number of sentences in the paragraph.
    * @returns A paragraph of sentences.
    */
-  paragraph(init: LoremParagraphInit|number = {}): string {
-    let opts: LoremParagraphInit = {};
+  paragraph(init: ILoremParagraphInit|number = {}): string {
+    let opts: ILoremParagraphInit = {};
     if (typeof init === 'number') {
       opts.sentences = init;
     } else {
@@ -137,8 +137,8 @@ export class Lorem {
   /** 
    * @returns A number of paragraphs.
    */
-  paragraphs(init: LoremParagraphsInit|number = {}): string {
-    let opts: LoremParagraphsInit = {};
+  paragraphs(init: ILoremParagraphsInit|number = {}): string {
+    let opts: ILoremParagraphsInit = {};
     if (typeof init === 'number') {
       opts.size = init;
     } else {
@@ -152,10 +152,10 @@ export class Lorem {
   /**
    * @returns A syllable or a number of syllables.
    */
-  syllable(init: LoremSyllableInit = {}): string {
+  syllable(init: ILoremSyllableInit = {}): string {
     const { syntax } = this[localeValue];
 
-    const opts: LoremSyllableInit = { ...init };
+    const opts: ILoremSyllableInit = { ...init };
     const length = opts.length || this[typesValue].number({ min: 2, max: 3 });
     const consonants = syntax && syntax.consonants || enLocale.syntax!.consonants as string;
     const vowels = syntax && syntax.vowels || enLocale.syntax!.vowels as string;

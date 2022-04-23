@@ -6,10 +6,10 @@ import { Internet } from './lib/Internet.js';
 import { Random } from './lib/Random.js';
 import { Time } from './lib/Time.js';
 import { Word } from './lib/Word.js';
-import { Http } from './lib/Http.js';
+import Http from './lib/Http.js';
 import { Software } from './lib/Software.js';
 import { Svg } from './lib/Svg.js';
-import { DataMockInit } from './Types.js';
+import { IDataMockInit } from './Types.js';
 import { DataMockLocale } from '../locales/Types.js';
 
 export const localeValue = Symbol('localeValue');
@@ -68,7 +68,7 @@ export class DataMock {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit={}) {
+  constructor(init: IDataMockInit={}) {
     this[localeValue] = init.locale || enLocale;
     this.types = new Types(init.seed);
     this.person = new Person({ ...init, locale: this[localeValue]});

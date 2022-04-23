@@ -1,7 +1,7 @@
 import { Types } from '../Types.js';
 import { Lorem } from '../Lorem.js';
-import { HttpPayload } from './HttpPayload.js';
-import { DataMockInit, IFormDataTextPartInit, IFormDataPartInit, IFormDataInit } from '../../Types.js';
+import HttpPayloadGenerator from './Payload.js';
+import { IDataMockInit, IFormDataTextPartInit, IFormDataPartInit, IFormDataInit } from '../../Types.js';
 import { DataMockLocale } from '../../../locales/Types.js';
 
 /**
@@ -9,18 +9,18 @@ import { DataMockLocale } from '../../../locales/Types.js';
  * 
  * Note, this is only available in a browser.
  */
-export class FormDataGenerator {
+export default class FormDataGenerator {
   protected _types: Types;
   protected _lorem: Lorem;
-  protected _payload: HttpPayload;
+  protected _payload: HttpPayloadGenerator;
 
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit = {}) {
+  constructor(init: IDataMockInit = {}) {
     this._types = new Types(init.seed);
     this._lorem = new Lorem(init);
-    this._payload = new HttpPayload(init);
+    this._payload = new HttpPayloadGenerator(init);
   }
 
   seed(value?: number): void {

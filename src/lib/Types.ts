@@ -3,7 +3,7 @@ import { Random } from './Random.js';
 import { MersenneTwister } from './MersenneTwister.js';
 import * as BasicTypes from './BasicTypes.js';
 import { HEX_POOL } from './Utils.js';
-import { TypeNumberInit, TypeDateTimeInit, TypeBooleanInit, TypeFalsyInit, TypeCharacterInit, TypeHashInit } from '../Types.js';
+import { ITypeNumberInit, ITypeDateTimeInit, ITypeBooleanInit, ITypeFalsyInit, ITypeCharacterInit, ITypeHashInit } from '../Types.js';
 
 export const randomValue = Symbol('randomValue');
 export const mtValue = Symbol('mtValue');
@@ -30,7 +30,7 @@ export class Types {
    * @param init When passed a number it generates an integer in a range from [0, init]
    * @returns A pseudo-random number.
    */
-  number(init: number|TypeNumberInit = {}): number {
+  number(init: number|ITypeNumberInit = {}): number {
     return BasicTypes.number(this[mtValue], init);
   }
 
@@ -39,7 +39,7 @@ export class Types {
    * @param init When passed a number it generates an float with this precision
    * @returns number A pseudo-random floating point number.
    */
-  float(init: number|TypeNumberInit = {}): number {
+  float(init: number|ITypeNumberInit = {}): number {
     return BasicTypes.float(this[mtValue], init);
   }
   
@@ -47,7 +47,7 @@ export class Types {
    * @param init When passed a number it generates an date in a range from [since 1. Jan 1970 UTC, init]
    * @returns A random date in a range.
    */
-  datetime(init: number|TypeDateTimeInit = {}): Date {
+  datetime(init: number|ITypeDateTimeInit = {}): Date {
     return BasicTypes.date(this[mtValue], init);
   }
 
@@ -60,7 +60,7 @@ export class Types {
     return BasicTypes.string(this[mtValue], size, pool);
   }
 
-  character(init: TypeCharacterInit = {}): string {
+  character(init: ITypeCharacterInit = {}): string {
     return BasicTypes.character(this[mtValue], init);
   }
 
@@ -79,7 +79,7 @@ export class Types {
   /**
    * Generates a random hash value.
    */
-  hash(init: TypeHashInit = {}): string {
+  hash(init: ITypeHashInit = {}): string {
     const { length=40, casing='lower' } = init;
     const pool = casing === 'upper' ? HEX_POOL.toUpperCase() : HEX_POOL;
     return this.string(length, pool);
@@ -89,8 +89,8 @@ export class Types {
    * @param init When number it is the likelihood of receiving a true or false value back. 
    * @returns A random boolean value.
    */
-  boolean(init: number|TypeBooleanInit = {}): boolean {
-    let opts: TypeBooleanInit = {};
+  boolean(init: number|ITypeBooleanInit = {}): boolean {
+    let opts: ITypeBooleanInit = {};
     if (typeof init === 'number') {
       opts.likelihood = init;
     } else if (typeof init === 'object') {
@@ -108,7 +108,7 @@ export class Types {
   /**
    * Produces a falsy value.
    */
-  falsy(init: TypeFalsyInit = {}): any {
+  falsy(init: ITypeFalsyInit = {}): any {
     const pool = init.pool || [false, null, 0, NaN, ''];
     return this[randomValue].pickOne(pool);
   }

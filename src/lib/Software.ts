@@ -1,6 +1,6 @@
 import { Random } from "./Random.js";
 import { Types } from "./Types.js";
-import { DataMockInit, TypeVersionInit } from '../Types.js';
+import { IDataMockInit, ITypeVersionInit } from '../Types.js';
 
 export const typesValue = Symbol('typesValue');
 export const randomValue = Symbol('randomValue');
@@ -11,7 +11,7 @@ export class Software {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit={}) {
+  constructor(init: IDataMockInit={}) {
     this[typesValue] = new Types(init.seed);
     this[randomValue] = new Random(init.seed);
   }
@@ -24,7 +24,7 @@ export class Software {
   /**
    * @returns The version name.
    */
-  version(init: TypeVersionInit = {}): string {
+  version(init: ITypeVersionInit = {}): string {
     const { format='symVer' } = init;
     switch (format) {
       case 'symVer': return this.symVersion(init);
@@ -37,7 +37,7 @@ export class Software {
   /**
    * @returns Semantic versioning version name.
    */
-  symVersion(init: TypeVersionInit = {}): string {
+  symVersion(init: ITypeVersionInit = {}): string {
     const { patch={} } = init;
     const result = this.majorMinorVersion(init);
     let patchValue: number;
@@ -53,7 +53,7 @@ export class Software {
   /**
    * @returns Major and minor only version name.
    */
-  majorMinorVersion(init: TypeVersionInit = {}): string {
+  majorMinorVersion(init: ITypeVersionInit = {}): string {
     const { minor={} } = init;
     let minorValue: number;
     if (typeof minor === 'number') {
@@ -69,7 +69,7 @@ export class Software {
   /**
    * @returns Major only version name.
    */
-  majorVersion(init: TypeVersionInit = {}): string {
+  majorVersion(init: ITypeVersionInit = {}): string {
     const { major={} } = init;
     let majorValue: number;
     if (typeof major === 'number') {
@@ -84,7 +84,7 @@ export class Software {
   /**
    * @returns The pre-release version name.
    */
-  preVersion(init: TypeVersionInit = {}): string {
+  preVersion(init: ITypeVersionInit = {}): string {
     const version = this.version(init);
     const suffixes = ['pre', 'alpha', 'beta', 'dev'];
     const suffix = this[randomValue].pickOne(suffixes);

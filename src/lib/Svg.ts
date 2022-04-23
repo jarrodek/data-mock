@@ -1,6 +1,6 @@
 import { Internet } from "./Internet.js";
 import { Types } from './Types.js';
-import { DataMockInit, ISvgImageInit, ISvgShapeInit } from "../Types.js";
+import { IDataMockInit, ISvgImageInit, ISvgShapeInit } from "../Types.js";
 import { DataMockLocale } from '../../locales/Types.js';
 
 /**
@@ -13,7 +13,7 @@ export class Svg {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit = {}) {
+  constructor(init: IDataMockInit = {}) {
     this._internet = new Internet(init);
     this._types = new Types(init.seed);
   }

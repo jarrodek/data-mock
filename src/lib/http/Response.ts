@@ -1,9 +1,9 @@
 import { Lorem } from '../Lorem.js';
 import { Random } from '../Random.js';
 import { Types } from '../Types.js';
-import { HttpHeaders } from './HttpHeaders.js';
-import { HttpPayload } from './HttpPayload.js';
-import { DataMockInit, HttpResponseInit, HttpResponseData, HttpResponseRedirectStatusInit, HttpResponseStatusResult } from '../../Types.js';
+import HttpHeadersGenerator from './Headers.js';
+import HttpPayloadGenerator from './Payload.js';
+import { IDataMockInit, IHttpResponseInit, IHttpResponseData, IHttpResponseRedirectStatusInit, IHttpResponseStatusResult, IHttpPayloadInit } from '../../Types.js';
 import { DataMockLocale } from '../../../locales/Types.js';
 
 export const typesValue = Symbol('typesValue');
@@ -15,9 +15,9 @@ export const randomValue = Symbol('randomValue');
 /**
  * Generates HTTP response data.
  */
-export class HttpResponse {
-  [headersValue]: HttpHeaders;
-  [payloadValue]: HttpPayload;
+export default class ResponseGenerator {
+  [headersValue]: HttpHeadersGenerator;
+  [payloadValue]: HttpPayloadGenerator;
   [loremValue]: Lorem;
   [typesValue]: Types;
   [randomValue]: Random;
@@ -32,9 +32,9 @@ export class HttpResponse {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit = {}) {
-    this[headersValue] = new HttpHeaders(init);
-    this[payloadValue] = new HttpPayload(init);
+  constructor(init: IDataMockInit = {}) {
+    this[headersValue] = new HttpHeadersGenerator(init);
+    this[payloadValue] = new HttpPayloadGenerator(init);
     this[loremValue] = new Lorem(init);
     this[typesValue] = new Types(init.seed);
     this[randomValue] = new Random(init.seed);
@@ -60,21 +60,21 @@ export class HttpResponse {
   /**
    * Generates an HTTP response.
    */
-  response(init: HttpResponseInit = {}): HttpResponseData {
+  response(init: IHttpResponseInit = {}): IHttpResponseData {
     const types = this[typesValue];
-    const ct = init.noBody ? undefined : this[headersValue].contentType();
-    const body = init.noBody ? undefined : this[payloadValue].payload(ct);
-    const headers = this[headersValue].headers('response', ct);
+    const mime = this[headersValue].contentType(init.payload as IHttpPayloadInit);
+    const body = this[payloadValue].payload({...(init.payload || {}), contentType: mime});
+    const headers = this[headersValue].headers('response', mime);
     const statusGroup = init.statusGroup ? init.statusGroup : types.number({ min: 2, max: 5 });
     const sCode = types.number({ min: 0, max: 99 }).toString();
     const code = Number(`${statusGroup}${sCode.padStart(2, '0')}`);
     const status = this[loremValue].word();
-    const result: HttpResponseData = {
+    const result: IHttpResponseData = {
       status: code,
       statusText: status,
       headers,
     };
-    if (!init.noBody) {
+    if (body) {
       result.payload = body;
     }
     return result;
@@ -83,7 +83,7 @@ export class HttpResponse {
   /**
    * @param opts Generate data options
    */
-  redirectStatus(opts: HttpResponseRedirectStatusInit = {}): HttpResponseStatusResult {
+  redirectStatus(opts: IHttpResponseRedirectStatusInit = {}): IHttpResponseStatusResult {
     const code = typeof opts.code === 'number' ? opts.code : this[randomValue].pickOne(this.redirectCodes);
     const messages = {
       301: 'Moved Permanently',

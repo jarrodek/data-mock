@@ -5,7 +5,7 @@ import { Random } from './Random.js';
 import { Software } from './Software.js';
 import { Time } from './Time.js';
 import { Types } from './Types.js';
-import { DataMockInit, HarTiming, HarTimingInit } from '../Types.js';
+import { IDataMockInit, IHarTiming, IHarTimingInit } from '../Types.js';
 import { DataMockLocale } from '../../locales/Types.js';
 
 export const typesValue = Symbol('typesValue');
@@ -28,7 +28,7 @@ export class Har {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit={}) {
+  constructor(init: IDataMockInit={}) {
     this[typesValue] = new Types(init.seed);
     this[randomValue] = new Random(init.seed);
     this[loremValue] = new Lorem(init);
@@ -54,9 +54,9 @@ export class Har {
     this[internetValue].locale(locale);
   }
 
-  timing(init: HarTimingInit = {}): HarTiming {
+  timing(init: IHarTimingInit = {}): IHarTiming {
     const types = this[typesValue];
-    const result: HarTiming = {
+    const result: IHarTiming = {
       blocked: types.number({ min: 0, max: 100 }),
       connect: types.number({ min: 0, max: 100 }),
       receive: types.number({ min: 0, max: 100 }),

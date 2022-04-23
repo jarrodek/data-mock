@@ -4,7 +4,7 @@ import enLocale from '../../locales/en/index.js';
 import { Person } from './Person.js';
 import { HEX_POOL, slug } from './Utils.js';
 import { Word } from './Word.js';
-import { DataMockInit, InternetEmailInit, InternetUsernameInit } from '../Types.js';
+import { IDataMockInit, IInternetEmailInit, IInternetUsernameInit } from '../Types.js';
 import { DataMockLocale } from '../../locales/Types.js';
 
 
@@ -27,7 +27,7 @@ export class Internet {
   /**
    * @param init The library init options.
    */
-  constructor(init: DataMockInit={}) {
+  constructor(init: IDataMockInit={}) {
     this[typesValue] = new Types(init.seed);
     this[randomValue] = new Random(init.seed);
     this[personValue] = new Person(init);
@@ -64,7 +64,7 @@ export class Internet {
   /**
    * @returns generated user email
    */
-  email(init: InternetEmailInit = {}): string {
+  email(init: IInternetEmailInit = {}): string {
     const { internet } = this[localeValue];
     const pool = internet && internet.email.free || enLocale.internet!.email.free;
     const provider = init.provider || this[randomValue].pickOne(pool);
@@ -76,7 +76,7 @@ export class Internet {
   /**
    * @returns Generated email for an example domain.
    */
-  exampleEmail(init: InternetUsernameInit = {}): string {
+  exampleEmail(init: IInternetUsernameInit = {}): string {
     const { internet } = this[localeValue];
     const pool = internet && internet.email.example || enLocale.internet!.email.example;
     const provider = this[randomValue].pickOne(pool);
@@ -86,7 +86,7 @@ export class Internet {
   /**
    * @returns Generated username.
    */
-  userName(init: InternetUsernameInit = {}): string {
+  userName(init: IInternetUsernameInit = {}): string {
     const { firstName=this[personValue].firstName(), lastName=this[personValue].lastName() } = init;
     let result: string | undefined;
     switch (this[typesValue].number(2)) {
