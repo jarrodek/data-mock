@@ -2,7 +2,6 @@
 
 module.exports = {
   extends: [
-    'eslint-config-prettier',
     'eslint:recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
@@ -31,10 +30,7 @@ module.exports = {
     "no-dupe-class-members": "off",
     'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
     'no-underscore-dangle': 'off',
-    "import/extensions": ["error", "never", "ignorePackages", {
-      "js": "never",
-      "ts": "never"
-    }],
+    "import/extensions": "off",
     // air bnb restricts for of loops, which we want to allow. we can't cherry pick it out, so we have to copy over the existing rules
     'no-restricted-syntax': [
       'error',
@@ -95,11 +91,11 @@ module.exports = {
   ],
 
   settings: {
-    'import/parsers': {
+    "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
-    'import/extensions': [".js", ".jsx", ".ts", ".tsx"],
-    'import/resolver': {
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
+    "import/resolver": {
       "typescript": {
       },
       "node": {

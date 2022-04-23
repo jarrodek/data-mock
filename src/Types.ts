@@ -372,7 +372,7 @@ export interface HttpResponseData {
   payload?: any;
 }
 
-export declare interface HttpResponseRedirectStatusInit {
+export interface HttpResponseRedirectStatusInit {
   /**
    * The redirection code. Otherwise a random pick is used
    */
@@ -383,7 +383,7 @@ export declare interface HttpResponseRedirectStatusInit {
   status?: string;
 }
 
-export declare interface HttpResponseStatusResult {
+export interface HttpResponseStatusResult {
   /**
    * The redirection code.
    */
@@ -392,4 +392,71 @@ export declare interface HttpResponseStatusResult {
    * The status message.
    */
   status: string;
+}
+
+export interface ISvgShapeInit {
+  /**
+   * Shapes stroke.
+   * @default to 2.
+   */
+  stroke?: number;
+  /**
+   * The image opacity.
+   * @default 1.0
+   */
+  opacity?: number;
+}
+
+export interface ISvgImageInit extends ISvgShapeInit {
+  /**
+   * The image width.
+   * @default to 256.
+   */
+  width?: number;
+  /**
+   * The image height.
+   * @default to 256.
+   */
+  height?: number;
+  /**
+   * The number of shapes to generate.
+   * When this is set then the `maxShapes` is ignored.
+   */
+  shapes?: number;
+  /**
+   * When `shapes` is not set then this is used to generate a random
+   * value of shapes between 1 and `maxShapes`.
+   * @default 16
+   */
+  maxShapes?: number;
+}
+
+export interface IFormDataTextPartInit {
+  /**
+   * The mime type of the text part when adding a text part.
+   */
+  textMime?: string;
+  /**
+   * Makes sure the generated text part is always a text.
+   * This also ignores the `textMime` value.
+   */
+  clearText?: boolean;
+}
+
+export interface IFormDataPartInit extends IFormDataTextPartInit {
+  /**
+   * Whether all parts are File parts
+   */
+  filePart?: boolean;
+  /**
+   * Whether all parts are Text parts
+   */
+  textPart?: boolean;
+}
+
+export interface IFormDataInit extends IFormDataPartInit {
+  /**
+   * The number of pars to add to the form.
+   */
+  parts?: number;
 }

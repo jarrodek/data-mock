@@ -8,6 +8,7 @@ import { Time } from './lib/Time.js';
 import { Word } from './lib/Word.js';
 import { Http } from './lib/Http.js';
 import { Software } from './lib/Software.js';
+import { Svg } from './lib/Svg.js';
 import { DataMockInit } from './Types.js';
 import { DataMockLocale } from '../locales/Types.js';
 
@@ -59,6 +60,10 @@ export class DataMock {
    * Software related generator.
    */
   software: Software;
+  /**
+   * SVG images and shapes generator.
+   */
+  svg: Svg;
 
   /**
    * @param init The library init options.
@@ -74,6 +79,7 @@ export class DataMock {
     this.word = new Word({ ...init, locale: this[localeValue]});
     this.http = new Http({ ...init, locale: this[localeValue]});
     this.software = new Software({ ...init, locale: this[localeValue]});
+    this.svg = new Svg({ ...init, locale: this[localeValue]})
   }
 
   seed(value?: number): void {
@@ -86,6 +92,7 @@ export class DataMock {
     this.word.seed(value);
     this.http.seed(value);
     this.software.seed(value);
+    this.svg.seed(value);
   }
 
   /**
@@ -98,5 +105,6 @@ export class DataMock {
     this.http.locale(locale);
     this.internet.locale(locale);
     this.lorem.locale(locale);
+    this.svg.locale(locale);
   }
 }

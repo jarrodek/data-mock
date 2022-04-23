@@ -1,6 +1,7 @@
 import { HttpHeaders } from "./http/HttpHeaders.js";
 import { HttpPayload } from "./http/HttpPayload.js";
 import { HttpResponse } from "./http/HttpResponse.js";
+import { FormDataGenerator } from "./http/FormData.js";
 import { Internet } from "./Internet.js";
 import { Random } from "./Random.js";
 import { DataMockInit, HttpRequestInit, HttpRequest, HttpOperationInit } from '../Types.js';
@@ -23,6 +24,7 @@ export class Http {
   headers: HttpHeaders;
   payload: HttpPayload;
   response: HttpResponse;
+  formData: FormDataGenerator;
 
   /**
    * @param init The library init options.
@@ -34,6 +36,7 @@ export class Http {
     this.headers = new HttpHeaders(init);
     this.payload = new HttpPayload(init);
     this.response = new HttpResponse(init);
+    this.formData = new FormDataGenerator(init);
   }
 
   seed(value?: number): void {
@@ -42,6 +45,7 @@ export class Http {
     this.headers.seed(value);
     this.payload.seed(value);
     this.response.seed(value);
+    this.formData.seed(value);
   }
 
   /**
@@ -51,6 +55,7 @@ export class Http {
     this.headers.locale(locale);
     this.payload.locale(locale);
     this.response.locale(locale);
+    this.formData.locale(locale);
     this[internetValue].locale(locale);
   }
 

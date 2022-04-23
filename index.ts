@@ -9,6 +9,8 @@ export { Types } from './src/lib/Types.js';
 export { Word } from './src/lib/Word.js';
 export { Har } from './src/lib/Har.js';
 export { Software } from './src/lib/Software.js';
+export { Svg } from './src/lib/Svg.js';
+export { FormDataGenerator } from './src/lib/http/FormData.js';
 export * as Utils from './src/lib/Utils.js'
 export * from './src/Types.js';
 export * from './locales/Types.js';

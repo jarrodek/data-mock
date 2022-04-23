@@ -4,8 +4,7 @@ import { Software } from '../../src/lib/Software.js';
 
 describe('Software()', () => {
   describe('version()', () => {
-    /** @type Software */
-    let software;
+    let software: Software;
 
     before(() => {
       software = new Software();
@@ -67,8 +66,7 @@ describe('Software()', () => {
   });
 
   describe('majorVersion()', () => {
-    /** @type Software */
-    let software;
+    let software: Software;
 
     before(() => {
       software = new Software();
@@ -108,8 +106,7 @@ describe('Software()', () => {
   });
 
   describe('majorMinorVersion()', () => {
-    /** @type Software */
-    let software;
+    let software: Software;
 
     before(() => {
       software = new Software();
@@ -158,8 +155,7 @@ describe('Software()', () => {
   });
 
   describe('symVersion()', () => {
-    /** @type Software */
-    let software;
+    let software: Software;
 
     before(() => {
       software = new Software();
@@ -213,8 +209,7 @@ describe('Software()', () => {
   });
 
   describe('preVersion()', () => {
-    /** @type Software */
-    let software;
+    let software: Software;
 
     before(() => {
       software = new Software();

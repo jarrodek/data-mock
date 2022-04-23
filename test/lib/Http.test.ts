@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // eslint-disable-next-line import/no-unresolved
 import { assert } from '@esm-bundle/chai';
 import sinon from 'sinon';
@@ -5,8 +6,7 @@ import { Http } from '../../src/lib/Http.js';
 
 describe('Http', () => {
   describe('#payloadOperations', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
 
     beforeEach(() => {
       http = new Http();
@@ -20,8 +20,7 @@ describe('Http', () => {
   });
 
   describe('#nonPayloadOperations', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
 
     beforeEach(() => {
       http = new Http();
@@ -35,8 +34,7 @@ describe('Http', () => {
   });
 
   describe('request()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
 
     beforeEach(() => {
       http = new Http();
@@ -80,8 +78,7 @@ describe('Http', () => {
   });
 
   describe('get()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
 
     beforeEach(() => {
       http = new Http();
@@ -101,8 +98,7 @@ describe('Http', () => {
   });
 
   describe('post()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
 
     beforeEach(() => {
       http = new Http();
@@ -122,8 +118,7 @@ describe('Http', () => {
   });
 
   describe('put()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
 
     beforeEach(() => {
       http = new Http();
@@ -143,8 +138,7 @@ describe('Http', () => {
   });
 
   describe('delete()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
 
     beforeEach(() => {
       http = new Http();
@@ -158,8 +152,7 @@ describe('Http', () => {
   });
 
   describe('method()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
 
     beforeEach(() => {
       http = new Http();
@@ -199,8 +192,7 @@ describe('Http', () => {
 
 describe('Http.headers', () => {
   describe('headers()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -237,8 +229,7 @@ describe('Http.headers', () => {
   });
 
   describe('link()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -256,8 +247,7 @@ describe('Http.headers', () => {
   });
 
   describe('contentType()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -272,8 +262,7 @@ describe('Http.headers', () => {
 
 describe('Http.payload', () => {
   describe('isPayload()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -300,8 +289,7 @@ describe('Http.payload', () => {
   });
 
   describe('urlEncoded()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -319,8 +307,7 @@ describe('Http.payload', () => {
   });
 
   describe('json()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -339,8 +326,7 @@ describe('Http.payload', () => {
   });
 
   describe('xml()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -353,8 +339,7 @@ describe('Http.payload', () => {
   });
 
   describe('payload()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -398,6 +383,11 @@ describe('Http.payload', () => {
       assert.typeOf(result, 'string');
     });
 
+    it('returns a string for image/svg+xml', () => {
+      const result = http.payload.payload('image/svg+xml');
+      assert.include(result, '<?xml version="1.0"?>');
+    });
+
     it('returns a string for other types', () => {
       const result = http.payload.payload('text/plain');
       assert.typeOf(result, 'string');
@@ -408,12 +398,46 @@ describe('Http.payload', () => {
       assert.isAbove(result.length, 1);
     });
   });
+
+  describe('supportsPayload()', () => {
+    [
+      'application/x-www-form-urlencoded',
+      'application/json',
+      'application/xml',
+      'image/svg+xml',
+    ].forEach((mime) => {
+      it(`returns true for ${mime}`, () => {
+        const generator = new Http();
+        const result = generator.payload.supportsPayload(mime);
+        assert.isTrue(result);
+      });
+    });
+
+    it(`returns true for no mime`, () => {
+      const generator = new Http();
+      const result = generator.payload.supportsPayload();
+      assert.isTrue(result);
+    });
+
+    it(`returns false for unsupported mime`, () => {
+      const generator = new Http();
+      const result = generator.payload.supportsPayload('other');
+      assert.isFalse(result);
+    });
+  });
+
+  describe('svg()', () => {
+    it(`returns an xml`, () => {
+      const generator = new Http();
+      const result = generator.payload.svg();
+      assert.include(result, '<?xml version="1.0"?>');
+    });
+  });
 });
 
 describe('Http.response', () => {
   describe('response()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -447,8 +471,7 @@ describe('Http.response', () => {
   });
 
   describe('redirectStatus()', () => {
-    /** @type Http */
-    let http;
+    let http: Http;
   
     beforeEach(() => {
       http = new Http();
@@ -473,6 +496,110 @@ describe('Http.response', () => {
     it('returns the passed status', () => {
       const result = http.response.redirectStatus({ status: 'test' });
       assert.equal(result.status, 'test');
+    });
+  });
+});
+
+describe('Http.formData', () => {
+  describe('filePart()', () => {
+    let http: Http;
+  
+    beforeEach(() => {
+      http = new Http();
+    });
+
+    it('adds a part', () => {
+      const fd = new FormData();
+      http.formData.filePart(fd);
+      let addedName: string;
+      let addedFile: File;
+      let size = 0;
+      for (const [name, value] of fd.entries()) {
+        size += 1;
+        addedName = name;
+        addedFile = value as File;
+      }
+      assert.equal(size, 1, 'has one file');
+      assert.typeOf(addedName, 'string', 'has file name');
+      assert.typeOf(addedFile, 'file', 'has the file');
+      assert.isAbove(addedFile.size, 0, 'the file has a content');
+      assert.isNotEmpty(addedFile.name, 'the file has the name');
+    });
+  });
+
+  describe('textPart()', () => {
+    let http: Http;
+  
+    beforeEach(() => {
+      http = new Http();
+    });
+
+    it('adds a clear text part', () => {
+      const fd = new FormData();
+      http.formData.textPart(fd, { clearText: true });
+      let addedName: string;
+      let addedText: string;
+      let size = 0;
+      for (const [name, value] of fd.entries()) {
+        size += 1;
+        addedName = name;
+        addedText = value as string;
+      }
+      assert.equal(size, 1, 'has one file');
+      assert.typeOf(addedName, 'string', 'has file name');
+      assert.typeOf(addedText, 'string', 'has the contents');
+    });
+
+    it('adds a blob text part', () => {
+      const fd = new FormData();
+      http.formData.textPart(fd, { textMime: 'application/json' });
+      let addedName: string;
+      let addedValue: Blob;
+      let size = 0;
+      for (const [name, value] of fd.entries()) {
+        size += 1;
+        addedName = name;
+        addedValue = value as Blob;
+      }
+      assert.equal(size, 1, 'has one file');
+      assert.typeOf(addedName, 'string', 'has file name');
+      assert.typeOf(addedValue, 'file', 'has the contents');
+    });
+  });
+
+  describe('form()', () => {
+    let http: Http;
+  
+    beforeEach(() => {
+      http = new Http();
+    });
+
+    it('returns the form', () => {
+      const result = http.formData.form();
+      assert.typeOf(result, 'FormData');
+    });
+
+    it('adds parts', () => {
+      const fd = http.formData.form();
+      let size = 0;
+      for (const _ of fd.entries()) {
+        size += 1;
+      }
+      assert.isAbove(size, 0);
+    });
+
+    it('adds file parts only', () => {
+      const fd = http.formData.form({ filePart: true, parts: 5 });
+      for (const [, file] of fd.entries()) {
+        assert.typeOf(file, 'File');
+      }
+    });
+
+    it('adds text parts only', () => {
+      const fd = http.formData.form({ parts: 5, textPart: true, clearText: true });
+      for (const [, file] of fd.entries()) {
+        assert.typeOf(file, 'string');
+      }
     });
   });
 });

@@ -1,7 +1,9 @@
 import { Types } from '../Types.js';
 import { Lorem } from '../Lorem.js';
 import { Random } from '../Random.js';
-import { DataMockInit, HttpPayloadInit } from '../../Types.js';
+import { Internet } from '../Internet.js';
+import { Svg } from '../Svg.js';
+import { DataMockInit, HttpPayloadInit, ISvgImageInit } from '../../Types.js';
 import { DataMockLocale } from '../../../locales/Types.js';
 
 export const randomValue = Symbol('randomValue');
@@ -16,6 +18,9 @@ export class HttpPayload {
   [randomValue]: Random;
   [loremValue]: Lorem;
 
+  protected _internet: Internet;
+  protected _svg: Svg;
+
   /**
    * @param init The library init options.
    */
@@ -23,6 +28,8 @@ export class HttpPayload {
     this[typesValue] = new Types(init.seed);
     this[randomValue] = new Random(init.seed);
     this[loremValue] = new Lorem(init);
+    this._internet = new Internet(init);
+    this._svg = new Svg(init);
   }
 
   seed(value?: number): void {
@@ -55,6 +62,23 @@ export class HttpPayload {
   }
 
   /**
+   * Tests whether this generator supports generating a payload of a given mime type
+   * @param mime The mime type of the body
+   * @returns True when the body can be generated via this generator.
+   */
+  supportsPayload(mime?: string): boolean {
+    if (!mime) {
+      return true;
+    }
+    return [
+      'application/x-www-form-urlencoded',
+      'application/json',
+      'application/xml',
+      'image/svg+xml',
+    ].includes(mime);
+  }
+
+  /**
    * Generates a random payload data for given mime type.
    * 
    * @param mime The ime type. When not set it picks one.
@@ -68,6 +92,8 @@ export class HttpPayload {
         return this.json();
       case 'application/xml':
         return this.xml();
+      case 'image/svg+xml':
+        return this.svg();
       default:
         return this[loremValue].paragraph();
     }
@@ -131,5 +157,12 @@ export class HttpPayload {
     result += '\n';
     result += '</feed>';
     return result;
+  }
+
+  /**
+   * This is a link to the SVG generator.
+   */
+  svg(init?: ISvgImageInit): string {
+    return this._svg.image(init);
   }
 }
