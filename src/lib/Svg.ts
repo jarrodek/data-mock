@@ -85,12 +85,14 @@ export class Svg {
       result = `<ellipse cx="${x}" cy="${y}" rx="${rx}" ry="${ry}"`;
     } else {
       result = `<polyline points="`;
-      const points = this._types.number({ min: 1, max: this._types.number({ min: 0, max: 6 }) + 3 });
-      for (let i = 0; i < points; i++) {
+      const size = this._types.number({ min: 1, max: this._types.number({ min: 0, max: 6 }) + 3 });
+      const points: string[] = [];
+      for (let i = 0; i < size; i++) {
         const x = this._types.number({ min: 1, max: maxWidth });
         const y = this._types.number({ min: 1, max: maxHeight });
-        result += `${x} ${y}, `;
+        points.push(`${x} ${y}`);
       }
+      result += points.join(', ');
       result += '"';
     }
 
