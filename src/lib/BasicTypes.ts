@@ -112,7 +112,7 @@ export function date(mt: MersenneTwister, init: number | ITypeDateTimeInit = {})
   }
   const minMax = 8640000000000000;
   if (typeof opts.min !== 'number' || opts.min < minMax*-1) {
-    opts.min = new Date().setFullYear(1990, 1, 1);
+    opts.min = new Date().setFullYear(1970, 1, 1);
   }
   if (typeof opts.max !== 'number' || opts.max > minMax) {
     opts.max = new Date().setFullYear(2100, 1, 1);

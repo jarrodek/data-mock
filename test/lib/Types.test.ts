@@ -5,8 +5,7 @@ import { Types } from '../../index.js';
 
 describe('Types', () => {
   describe('number()', () => {
-    /** @type Types */
-    let types;
+    let types: Types;
 
     before(() => {
       types = new Types();
@@ -45,7 +44,7 @@ describe('Types', () => {
     it('respects the "precision" option', () => {
       const opts = { min: 0, max: 1.5, precision: 0.5 };
       let results = new Array(1024).fill(0).map(() => types.number(opts));
-      results = results.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
+      results = results.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), [] as number[]);
       results.sort();
       assert.equal(results[0], 0, 'has 0');
       assert.include(results, 0.5, 'has 0.5');
@@ -55,8 +54,7 @@ describe('Types', () => {
   });
 
   describe('float()', () => {
-    /** @type Types */
-    let types;
+    let types: Types;
 
     before(() => {
       types = new Types();
@@ -99,7 +97,7 @@ describe('Types', () => {
     it('respects the "precision" option', () => {
       const opts = { min: 0, max: 1.5, precision: 0.5 };
       let results = new Array(1024).fill(0).map(() => types.float(opts));
-      results = results.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), []);
+      results = results.reduce((unique, item) => (unique.includes(item) ? unique : [...unique, item]), [] as number[]);
       results.sort();
       assert.equal(results[0], 0, 'has 0');
       assert.include(results, 0.5, 'has 0.5');
@@ -109,8 +107,7 @@ describe('Types', () => {
   });
 
   describe('datetime()', () => {
-    /** @type Types */
-    let types;
+    let types: Types;
 
     before(() => {
       types = new Types();
@@ -145,8 +142,7 @@ describe('Types', () => {
   });
 
   describe('string()', () => {
-    /** @type Types */
-    let types;
+    let types: Types;
 
     beforeEach(() => {
       types = new Types();
@@ -176,8 +172,7 @@ describe('Types', () => {
   });
 
   describe('character()', () => {
-    /** @type Types */
-    let types;
+    let types: Types;
 
     before(() => {
       types = new Types();
@@ -242,8 +237,7 @@ describe('Types', () => {
   });
 
   describe('uuid()', () => {
-    /** @type Types */
-    let types;
+    let types: Types;
 
     before(() => {
       types = new Types();
@@ -258,7 +252,7 @@ describe('Types', () => {
 
   describe('hexaDecimal()', () => {
     /** @type Types */
-    let types;
+    let types: Types;
 
     before(() => {
       types = new Types();
@@ -276,8 +270,7 @@ describe('Types', () => {
   });
 
   describe('hash()', () => {
-    /** @type Types */
-    let types;
+    let types: Types;
 
     before(() => {
       types = new Types();
@@ -307,8 +300,7 @@ describe('Types', () => {
   });
 
   describe('boolean()', () => {
-    /** @type Types */
-    let types;
+    let types: Types;
 
     before(() => {
       types = new Types();
@@ -362,8 +354,7 @@ describe('Types', () => {
   });
 
   describe('falsy()', () => {
-    /** @type Types */
-    let types;
+    let types: Types;
 
     before(() => {
       types = new Types();

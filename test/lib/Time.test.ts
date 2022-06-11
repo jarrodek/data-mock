@@ -2,6 +2,10 @@
 import { assert } from '@esm-bundle/chai';
 import { Time } from '../../src/lib/Time.js';
 import en from '../../locales/en/index.js';
+import { LocaleTime, LocaleWeekday } from '../../locales/Types.js';
+
+const localeTime = en.time as LocaleTime;
+const localeWeekday = localeTime.weekday as LocaleWeekday;
 
 describe('Time()', () => {
   describe('midnight()', () => {
@@ -100,7 +104,6 @@ describe('Time()', () => {
   });
 
   describe('weekdayName()', () => {
-    /** @type Time */
     let time: Time;
 
     before(() => {
@@ -110,14 +113,14 @@ describe('Time()', () => {
     it('returns a weekday name from the locale', () => {
       for (let i = 0; i < 24; i++) {
         const result = time.weekdayName();
-        assert.include(en.time.weekday.names, result);
+        assert.include(localeWeekday.names, result);
       }
     });
 
     it('returns a weekday name as an abbr from the locale', () => {
       for (let i = 0; i < 24; i++) {
         const result = time.weekdayName({ abbr: true });
-        assert.include(en.time.weekday.abbr, result);
+        assert.include(localeWeekday.abbr, result);
       }
     });
 
@@ -130,7 +133,7 @@ describe('Time()', () => {
       });
       for (let i = 0; i < 24; i++) {
         const result = time.weekdayName({ abbr: true });
-        assert.include(en.time.weekday.abbr, result);
+        assert.include(localeWeekday.abbr, result);
       }
     });
 
@@ -153,7 +156,6 @@ describe('Time()', () => {
   });
 
   describe('dateOnly()', () => {
-    /** @type Time */
     let time: Time;
 
     before(() => {
@@ -181,7 +183,6 @@ describe('Time()', () => {
   });
 
   describe('dateTime()', () => {
-    /** @type Time */
     let time: Time;
 
     before(() => {
@@ -210,6 +211,41 @@ describe('Time()', () => {
     it('returns a date + time format', () => {
       const result = time.dateTimeOnly();
       assert.match(result, /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$/);
+    });
+  });
+
+  describe('timestamp()', () => {
+    let time: Time;
+
+    before(() => {
+      time = new Time();
+    });
+
+    it('returns a number', () => {
+      const result = time.timestamp();
+      assert.typeOf(result, 'number');
+    });
+
+    it('is higher than the min date', () => {
+      const result = time.timestamp();
+      assert.isAbove(result, new Date().setFullYear(1970, 1, 1));
+    });
+
+    it('is lower than than the max date', () => {
+      const result = time.timestamp();
+      assert.isBelow(result, new Date().setFullYear(2100, 1, 1));
+    });
+
+    it('respects the min option', () => {
+      const now = Date.now();
+      const result = time.timestamp({ min: now });
+      assert.isAbove(result, now);
+    });
+
+    it('respects the max option', () => {
+      const now = Date.now();
+      const result = time.timestamp({ max: now });
+      assert.isBelow(result, now);
     });
   });
 });

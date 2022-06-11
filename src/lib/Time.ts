@@ -53,7 +53,7 @@ export class Time {
    */
   timestamp(init?: ITypeDateTimeInit): number {
     const d = this[typesValue].datetime(init);
-    return d.getTime() / 1000;
+    return d.getTime();
   }
 
   /**
